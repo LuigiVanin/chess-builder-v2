@@ -3,7 +3,7 @@
 WIP
 
 ```sh
-> cargo test -- --nocapture
+    > cargo test -- --nocapture
 ```
 
 With target

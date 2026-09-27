@@ -13,6 +13,7 @@ pub enum MovementKind {
 #[derive(Clone, PartialEq, Copy, Debug)]
 pub enum Action {
   Move,
+  Promote,
   Capture,
 }
 
@@ -20,7 +21,7 @@ pub enum Action {
 pub struct Move {
   source: Vector2d<i64>,
   target: Vector2d<i64>,
-  action: Action,
+  action: Vec<Action>,
 }
 
 // impl std::fmt::Display for Move {
@@ -30,7 +31,7 @@ pub struct Move {
 // }
 
 impl Move {
-  pub fn new(source: Vector2d<i64>, target: Vector2d<i64>, action: Action) -> Move {
+  pub fn new(source: Vector2d<i64>, target: Vector2d<i64>, action: Vec<Action>) -> Move {
     Move {
       source,
       target,
@@ -46,7 +47,7 @@ impl Move {
     self.target
   }
 
-  pub fn action(&self) -> Action {
+  pub fn action(self) -> Vec<Action> {
     self.action
   }
 }
@@ -68,4 +69,22 @@ impl Clone for Box<dyn PieceStrategy> {
   fn clone(&self) -> Self {
     self.unsized_clone()
   }
+}
+
+pub fn mask_table_with_moves(mut table: Vec<Vec<String>>, moves: &Vec<Move>) -> Vec<Vec<String>> {
+  for mov in moves {
+    let actions = mov.clone().action();
+    let mut character = String::from("0");
+
+    for action in actions {
+      character = match action {
+        Action::Move => String::from("o"),
+        Action::Capture => String::from("X"),
+        Action::Promote => String::from("U"),
+      }
+    }
+    table[mov.target().y as usize][mov.target().x as usize] = character;
+  }
+
+  return table;
 }

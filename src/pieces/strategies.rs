@@ -2,7 +2,9 @@ use crate::{
   board::Board,
   pieces::{
     Piece,
-    patterns::{pawn_pattern, queen_pattern, rook_pattern},
+    patterns::{
+      bishop_pattern, king_pattern, knight_pattern, pawn_pattern, queen_pattern, rook_pattern,
+    },
     utils::generate_moves,
   },
   shared::strategy::{Move, Pattern, PieceStrategy},
@@ -58,7 +60,7 @@ impl PieceStrategy for RookStrategy {
 
 impl PieceStrategy for BishopStrategy {
   fn moveset(&self, board: &Board, piece: &Piece) -> Vec<Move> {
-    todo!()
+    generate_moves(bishop_pattern(), board, piece)
   }
 
   fn unsized_clone(&self) -> Box<dyn PieceStrategy> {
@@ -68,7 +70,7 @@ impl PieceStrategy for BishopStrategy {
 
 impl PieceStrategy for KnightStrategy {
   fn moveset(&self, board: &Board, piece: &Piece) -> Vec<Move> {
-    todo!()
+    generate_moves(knight_pattern(), board, piece)
   }
 
   fn unsized_clone(&self) -> Box<dyn PieceStrategy> {
@@ -88,7 +90,7 @@ impl PieceStrategy for QueenStrategy {
 
 impl PieceStrategy for KingStrategy {
   fn moveset(&self, board: &Board, piece: &Piece) -> Vec<Move> {
-    todo!()
+    generate_moves(king_pattern(), board, piece)
   }
 
   fn unsized_clone(&self) -> Box<dyn PieceStrategy> {
